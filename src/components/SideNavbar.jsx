@@ -136,7 +136,9 @@ export const SideNavbar = ({ isMobile, setIsMobile }) => {
         >
           <div className="w-full h-screen flex flex-col bg-[#080808] relative z-50 p-4 group  overflow-hidden ">
             <div className="absolute inset-y-0 right-0 w-full bg-transparent shadow-colored  shadow-[#CCC] z-50"></div>
-            <div className={`w-full z-50 flex items-start mb-10 pt-2 h-[50px] `}>
+            <div
+              className={`w-full z-50 flex items-start mb-10 pt-2 h-[50px] `}
+            >
               <div
                 className={`w-full flex items-center relative gap-5 cursor-pointer ${
                   data?.width ? " flex justify-start" : "justify-center "
@@ -230,36 +232,14 @@ export const SideNavbar = ({ isMobile, setIsMobile }) => {
                 )}
               </div>
             </div>
-            <div className="flex justify-center items-start mt-5 z-50 cursor-pointer rounded-lg  hover:bg-[#232323] xl:p-2 relative ">
-              {data.width
-                ? isOpen && (
-                    <div className="absolute top-12 bg-[#232323] text-white w-full flex flex-col p-2 rounded-lg">
-                      <option
-                        className="p-2 rounded-lg hover:bg-slate-400 hover:text-black"
-                        onClick={() =>
-                          data?.setSelectedComponent("testimonials")
-                        }
-                      >
-                        Testimonials
-                      </option>
-                      <option
-                        className="p-2 rounded-lg hover:bg-slate-400 hover:text-black"
-                        onClick={() => data?.setSelectedComponent("category")}
-                  >
-                        Categories
-                      </option>
-                      <option className="p-2 rounded-lg hover:bg-slate-400 hover:text-black" onClick={() => data?.setSelectedComponent("Landing Page")}>
-                      Landing Page
-                      </option>
-                    </div>
-                  )
-                : ""}
+            <div className="flex justify-center items-start mt-5 z-50 cursor-pointer rounded-lg  hover:bg-[#232323] xl:p-2">
               <div
-                className={` w-full flex items-center relative gap-5 ${
+                className={`w-full flex items-center relative gap-5 ${
                   data?.width
                     ? " flex justify-start ease-in-out delay-500"
                     : "justify-center "
                 }`}
+                onClick={() => data?.setSelectedComponent("testimonials")}
               >
                 <BiSolidComponent
                   className={`text-amber-500 ${
@@ -268,19 +248,61 @@ export const SideNavbar = ({ isMobile, setIsMobile }) => {
                 />
                 {data?.width && (
                   <div
-                    className={`hidden relative gap-5 group-hover:flex justify-center items-center`}
-                    onClick={() => setIsOpen(!isOpen)}
+                    className={`hidden group-hover:flex gap-5 justify-center items-center`}
                   >
                     <BiSolidComponent className={`text-amber-500  text-2xl`} />
-                    <div className="absolute top-[7px] right-[-20px]">
-                      {isOpen ? (
-                        <IoIosArrowUp className="text-white" />
-                      ) : (
-                        <IoIosArrowDown className="text-white" />
-                      )}
-                    </div>
 
-                    <h1 className="text-[#CCC] text-lg w-32 ">Components</h1>
+                    <h1 className="text-[#CCC] text-lg w-32 ">Testmonials</h1>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="flex justify-center items-start mt-5 z-50 cursor-pointer rounded-lg  hover:bg-[#232323] xl:p-2">
+              <div
+                className={`w-full flex items-center relative gap-5 ${
+                  data?.width
+                    ? " flex justify-start ease-in-out delay-500"
+                    : "justify-center "
+                }`}
+                onClick={() => data?.setSelectedComponent("category")}
+              >
+                <BiSolidComponent
+                  className={`text-amber-500 ${
+                    data?.width ? "hidden" : "flex"
+                  } text-2xl`}
+                />
+                {data?.width && (
+                  <div
+                    className={`hidden group-hover:flex gap-5 justify-center items-center`}
+                  >
+                    <BiSolidComponent className={`text-amber-500  text-2xl`} />
+
+                    <h1 className="text-[#CCC] text-lg w-32 ">Category</h1>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="flex justify-center items-start mt-5 z-50 cursor-pointer rounded-lg  hover:bg-[#232323] xl:p-2">
+              <div
+                className={`w-full flex items-center relative gap-5 ${
+                  data?.width
+                    ? " flex justify-start ease-in-out delay-500"
+                    : "justify-center "
+                }`}
+                onClick={() => data?.setSelectedComponent("Landing Page")}
+              >
+                <HiShoppingBag
+                  className={`text-amber-500 ${
+                    data?.width ? "hidden" : "flex"
+                  } text-2xl`}
+                />
+                {data?.width && (
+                  <div
+                    className={`hidden group-hover:flex gap-5 justify-center items-center`}
+                  >
+                    <HiShoppingBag className={`text-amber-500  text-2xl`} />
+
+                    <h1 className="text-[#CCC] text-lg w-32 ">Landing Page</h1>
                   </div>
                 )}
               </div>

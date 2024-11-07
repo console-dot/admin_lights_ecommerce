@@ -151,11 +151,14 @@ export const CategoryCard = () => {
 
               <div className=" absolute flex flex-col justify-center items-center top-6 md:top-10 xl:top-24  lg:top-14 left-5 md:left-10">
                 {editAble === index ? (
+                  <form action="">
                   <input
                     type="text"
                     className="bg-transparent border text-amber-500 lg:text-xl font-semibold italic"
                     name="categoryCardDesignh1"
                     value={item.categoryCardDesignh1}
+                    required   min={5}
+                    maxLength={20}
                     onChange={(e) =>
                       setCategoryCardDesignData((prevData) =>
                         prevData.map((item, idx) =>
@@ -166,6 +169,7 @@ export const CategoryCard = () => {
                       )
                     }
                   />
+                  </form>
                 ) : (
                   <h1 className="text-amber-500 lg:text-xl font-semibold italic">
                     {item?.categoryCardDesignh1}
@@ -173,11 +177,15 @@ export const CategoryCard = () => {
                 )}
 
                 {editAble === index ? (
+                  <form action="">
                   <input
                     type="text"
                     className="bg-transparent mt-2 border md:text-xl heading lg:text-3xl py-1  md:pb-2 font-semibold text-white lg:py-3"
                     name="categoryCardDesignh2"
                     value={item.categoryCardDesignh2}
+                    required
+                    min={5}
+                    maxLength={20}
                     onChange={(e) =>
                       setCategoryCardDesignData((prevData) =>
                         prevData.map((item, idx) =>
@@ -188,6 +196,7 @@ export const CategoryCard = () => {
                       )
                     }
                   />
+                  </form>
                 ) : (
                   <h1 className="md:text-xl heading lg:text-3xl py-1  md:pb-2 font-semibold text-white lg:py-3">
                     {item?.categoryCardDesignh2}

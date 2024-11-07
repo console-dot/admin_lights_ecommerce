@@ -76,6 +76,7 @@ export const LuxuryStylist = () => {
               {editAble === true ? (
                 <>
                   <button
+                  type="submit"
                     className="bg-white px-4 rounded-lg py-2"
                     onClick={() => updateLuxuryCall(luxuryData?._id)}
                   >
@@ -108,35 +109,43 @@ export const LuxuryStylist = () => {
             </div>
             <div className="md:w-1/2 w-full h-full flex flex-col items-center justify-center bg-[#171717] order-2 md:order-none py-4 md:py-0">
               <div className="w-full lg:w-[70%] flex flex-col items-start justify-center px-5 sm:px-10">
-                <div className="z-40">
-                  <input
-                    type="text"
-                    className="text-white z-40 pl-2 border bg-transparent heading text-2xl md:text-5xl"
-                    name="luxuryh1"
-                    value={luxuryData?.luxuryh1}
-                    onChange={(e) =>
-                      setLuxuryData({
-                        ...luxuryData,
-                        [e.target.name]: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div className="w-full lg:ml-48 md:ml-32 h-[1px] my-5 bg-[#2F2F2F] z-30"></div>
-                <div>
-                  <input
-                    type="text"
-                    className="text-lg pl-2 border italic h-full bg-transparent text-[#C0C0BB]"
-                    name="luxuryh2"
-                    value={luxuryData?.luxuryh2}
-                    onChange={(e) =>
-                      setLuxuryData({
-                        ...luxuryData,
-                        [e.target.name]: e.target.value,
-                      })
-                    }
-                  />
-                </div>
+                <form action="">
+                  <div className="z-40">
+                    <input
+                      type="text"
+                      className="text-white z-40 pl-2 border bg-transparent heading text-2xl md:text-5xl"
+                      name="luxuryh1"
+                      min={5}
+                      maxLength={30}
+                      required
+                      value={luxuryData?.luxuryh1}
+                      onChange={(e) =>
+                        setLuxuryData({
+                          ...luxuryData,
+                          [e.target.name]: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="w-full lg:ml-48 md:ml-32 h-[1px] my-5 bg-[#2F2F2F] z-30"></div>
+                  <div>
+                    <input
+                      type="text"
+                      className="text-lg pl-2 border italic h-full bg-transparent text-[#C0C0BB]"
+                      name="luxuryh2"
+                      value={luxuryData?.luxuryh2}
+                      min={5}
+                      maxLength={100}
+                      required
+                      onChange={(e) =>
+                        setLuxuryData({
+                          ...luxuryData,
+                          [e.target.name]: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </form>
                 <div className="mt-5">
                   <button className="shop-button px-4 py-2 bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white rounded-full">
                     <span>Read More</span>
@@ -146,7 +155,11 @@ export const LuxuryStylist = () => {
             </div>
             <div className=" hidden md:flex   md:w-1/2 w-full order-1 md:order-none">
               <img
-                src={singelFile?URL.createObjectURL(singelFile):`data:image/png;base64,${luxuryData?.imageId?.image}`}
+                src={
+                  singelFile
+                    ? URL.createObjectURL(singelFile)
+                    : `data:image/png;base64,${luxuryData?.imageId?.image}`
+                }
                 className="w-full h-full"
               />
             </div>

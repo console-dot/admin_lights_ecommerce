@@ -89,7 +89,7 @@ export const LightsHouse = () => {
       {editAble ? (
         <div className="relative flex p-4 flex-col lg:flex-row items-center lg:items-start gap-4 text-white w-full">
           <div className="absolute z-40 top-[-40px]">
-            <button
+            <button type="submit"
               className="bg-white px-4 py-2 rounded-lg text-black"
               onClick={updateLightHouseCall}
             >
@@ -129,12 +129,17 @@ export const LightsHouse = () => {
             />
           </div>
           <div className="flex lg:w-[60%] w-full items-center justify-center flex-col md:flex-row md:order-2 lg:order-none pt-5 gap-5">
+            <form action="">
+
             <div className="relative w-full flex flex-col md:items-end items-start md:ml-0 px-6 md:w-[50%]">
               <input
                 type="text"
                 className="text-amber-500 bg-transparent px-3 border heading md:text-5xl text-3xl md:text-end text-start tracking-tighter font-bold w-full"
                 value={LightHouseData?.lightHouseh1}
                 name="lightHouseh1"
+                required
+                min={5}
+                maxLength={20}
                 onChange={(e) =>
                   setLightHouseData({
                     ...LightHouseData,
@@ -146,6 +151,9 @@ export const LightsHouse = () => {
                 <textarea
                   className="mt-6 h-40 italic text-lg text-start w-full border bg-transparent"
                   name="lightHouseh2"
+                  required
+                  min={5}
+                  maxLength={100}
                   value={LightHouseData?.lightHouseh2}
                   onChange={(e) =>
                     setLightHouseData({
@@ -159,6 +167,7 @@ export const LightsHouse = () => {
                 <span>Shop Now</span>
               </button>
             </div>
+            </form>
             <div className="relative w-full md:w-[50%]">
               <img
                 src={

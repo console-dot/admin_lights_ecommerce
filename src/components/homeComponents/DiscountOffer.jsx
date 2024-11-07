@@ -43,7 +43,7 @@ export const DiscountOffer = () => {
     if (res.status === 200) {
       toast("updated DiscountOffer ");
       setEditAble(false);
-      getDiscountOfferCall()
+      getDiscountOfferCall();
     }
   };
 
@@ -97,6 +97,7 @@ export const DiscountOffer = () => {
               }}
             />
             <button
+              type="submit"
               className="bg-white px-4 py-2 mr-10 rounded-lg"
               onClick={() => {
                 updateDiscountOfferCall(discountOfferData?._id);
@@ -108,13 +109,35 @@ export const DiscountOffer = () => {
           </div>
           <div className="absolute bg-black opacity-20 inset-0"></div>
           <div className="relative flex mx-auto w-full max-w-[1200px] justify-between px-4 md:px-8">
-            <div className="relative text-start text-white p-6 flex flex-col justify-end">
-              <h1 className="heading md:text-7xl text-4xl text-[#F99106] text-center font-bold mb-4">
+            <form action="">
+              <div className="relative text-start text-white p-6 flex flex-col justify-end">
+                <h1 className="heading md:text-7xl text-4xl text-[#F99106] text-center font-bold mb-4">
+                  <input
+                    type="text"
+                    className="heading bg-transparent border md:text-7xl text-4xl text-[#F99106] text-center font-bold mb-4"
+                    name="discountOfferh1"
+                    required
+                    min={5}
+                    maxLength={30}
+                    value={discountOfferData?.discountOfferh1}
+                    onChange={(e) =>
+                      setDiscountOfferData({
+                        ...discountOfferData,
+                        [e.target.name]: e.target.value,
+                      })
+                    }
+                  />
+                </h1>
+                <div className="w-[2px] bg-white h-10 mx-auto md:my-4 my-1"></div>
+
                 <input
                   type="text"
-                  className="heading bg-transparent border md:text-7xl text-4xl text-[#F99106] text-center font-bold mb-4"
-                  name="discountOfferh1"
-                  value={discountOfferData?.discountOfferh1}
+                  className="text-lg text-[#CCCCCC] tracking-tighter italic mb-4 bg-transparent border text-center"
+                  name="discountOfferh2"
+                  value={discountOfferData?.discountOfferh2}
+                  required
+                  min={5}
+                  maxLength={50}
                   onChange={(e) =>
                     setDiscountOfferData({
                       ...discountOfferData,
@@ -122,41 +145,30 @@ export const DiscountOffer = () => {
                     })
                   }
                 />
-              </h1>
-              <div className="w-[2px] bg-white h-10 mx-auto md:my-4 my-1"></div>
 
-              <input
-                type="text"
-                className="text-lg text-[#CCCCCC] tracking-tighter italic mb-4 bg-transparent border text-center"
-                name="discountOfferh2"
-                value={discountOfferData?.discountOfferh2}
-                onChange={(e) =>
-                  setDiscountOfferData({
-                    ...discountOfferData,
-                    [e.target.name]: e.target.value,
-                  })
-                }
-              />
+                <input
+                  type="text"
+                  className="text-xl bg-transparent border font-semibold text-center heading"
+                  name="discountOfferh3"
+                  value={discountOfferData?.discountOfferh3}
+                  required
+                  min={5}
+                  maxLength={30}
+                  onChange={(e) =>
+                    setDiscountOfferData({
+                      ...discountOfferData,
+                      [e.target.name]: e.target.value,
+                    })
+                  }
+                />
 
-              <input
-                type="text"
-                className="text-xl bg-transparent border font-semibold text-center heading"
-                name="discountOfferh3"
-                value={discountOfferData?.discountOfferh3}
-                onChange={(e) =>
-                  setDiscountOfferData({
-                    ...discountOfferData,
-                    [e.target.name]: e.target.value,
-                  })
-                }
-              />
-
-              <div className="flex justify-center">
-                <button className="shop-button mt-6 w-28 px-2 py-3   bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white  rounded-full">
-                  <span>Shop Now</span>
-                </button>
+                <div className="flex justify-center">
+                  <button className="shop-button mt-6 w-28 px-2 py-3   bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white  rounded-full">
+                    <span>Shop Now</span>
+                  </button>
+                </div>
               </div>
-            </div>
+            </form>
             <div className="hidden md:block w-[50%]"></div>
           </div>
         </div>

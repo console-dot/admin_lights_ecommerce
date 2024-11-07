@@ -95,6 +95,7 @@ export const SignUpNewsLetter = () => {
                 }}
               />
               <button
+                type="submit"
                 className="bg-white px-4 py-2 mr-10 rounded-lg"
                 onClick={() => {
                   updateSignUpNewLetterCall(signUpNewLetterData?._id);
@@ -116,47 +117,55 @@ export const SignUpNewsLetter = () => {
               />
             </div>
             <div className="md:w-1/2 md:px-10  px-4 flex justify-center flex-col pt-5 ">
-              <div className="flex flex-row lg:flex-col items-center lg:items-start gap-2">
-                <CiMail className="text-[#CCCCCC] text-3xl  font-extrabold " />{" "}
-                <input
-                  type="text"
-                  className="text-amber-500 bg-transparent border heading  md:text-xl lg:text-3xl text-extrabold py-2"
-                  name="signUpNewLetterh1"
-                  value={signUpNewLetterData?.signUpNewLetterh1}
-                  onChange={(e) =>
-                    setSignUpNewLetterData({
-                      ...signUpNewLetterData,
-                      [e.target.name]: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <h1 className="text-[#CCCCCC] italic  ">
-                <input
-                  type="text"
-                  className="text-[#CCCCCC] italic border bg-transparent mt-3 "
-                  name="signUpNewLetterh2"
-                  value={signUpNewLetterData?.signUpNewLetterh2}
-                  onChange={(e) =>
-                    setSignUpNewLetterData({
-                      ...signUpNewLetterData,
-                      [e.target.name]: e.target.value,
-                    })
-                  }
-                />
-              </h1>
-              <div className=" border-b border-white relative lg:pt-5 pt-2 pb-1">
-                <input
-                  type="text"
-                  placeholder="enter your email"
-                  className="input input-bordered text-white input-primary w-full  focus:outline-none border-none bg-transparent"
-                />
-                <div className="absolute bottom-2.5 right-0">
-                  <button className="shop-button px-2 py-1   bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white rounded-full">
-                    <span className="text-white ">Subscribe</span>
-                  </button>
+              <form action="">
+                <div className="flex flex-row lg:flex-col items-center lg:items-start gap-2">
+                  <CiMail className="text-[#CCCCCC] text-3xl  font-extrabold " />{" "}
+                  <input
+                    type="text"
+                    className="text-amber-500 bg-transparent border heading  md:text-xl lg:text-3xl text-extrabold py-2"
+                    name="signUpNewLetterh1"
+                    value={signUpNewLetterData?.signUpNewLetterh1}
+                    required
+                    min={5}
+                    maxLength={50}
+                    onChange={(e) =>
+                      setSignUpNewLetterData({
+                        ...signUpNewLetterData,
+                        [e.target.name]: e.target.value,
+                      })
+                    }
+                  />
                 </div>
-              </div>
+                <h1 className="text-[#CCCCCC] italic  ">
+                  <input
+                    type="text"
+                    className="text-[#CCCCCC] italic border bg-transparent mt-3 "
+                    name="signUpNewLetterh2"
+                    required
+                    min={5}
+                    maxLength={50}
+                    value={signUpNewLetterData?.signUpNewLetterh2}
+                    onChange={(e) =>
+                      setSignUpNewLetterData({
+                        ...signUpNewLetterData,
+                        [e.target.name]: e.target.value,
+                      })
+                    }
+                  />
+                </h1>
+                <div className=" border-b border-white relative lg:pt-5 pt-2 pb-1">
+                  <input
+                    type="text"
+                    placeholder="enter your email"
+                    className="input input-bordered text-white input-primary w-full  focus:outline-none border-none bg-transparent"
+                  />
+                  <div className="absolute bottom-2.5 right-0">
+                    <button className="shop-button px-2 py-1   bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white rounded-full">
+                      <span className="text-white ">Subscribe</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         ) : (
@@ -170,10 +179,10 @@ export const SignUpNewsLetter = () => {
               </button>
             </div>
 
-            <div className="md:w-1/2 overflow-hidden">
+            <div className="md:w-1/2 overflow-hidden h-full flex justify-center items-center">
               <img
                 src={`data:image/png;base64,${signUpNewLetterData?.imageId?.image}`}
-                className="hover:scale-110 transition hover:ease-in ease-out duration-500  overflow-hidden cursor-pointer"
+                className="hover:scale-110 w-full transition hover:ease-in ease-out duration-500 h-full overflow-hidden cursor-pointer"
               />
             </div>
             <div className="md:w-1/2 md:px-10  px-4 flex justify-center flex-col pt-5 ">

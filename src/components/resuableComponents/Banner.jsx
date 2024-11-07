@@ -3,9 +3,10 @@ import "../../App.css";
 import "./Benner.css";
 import { getBanner, updateBanner, updateFile } from "../../api";
 import { toast } from "react-toastify";
+import { Loader } from "./Loader";
 
 export const Banner = () => {
-  const [allFileData, setAllFileData] = useState();
+  const [isLoder, setIsLoder] = useState();
   const [singelFile, setSingelFile] = useState();
   const inputFile = useRef();
   const [ids, setIds] = useState();
@@ -21,9 +22,13 @@ export const Banner = () => {
   };
 
   const getBannerCall = async () => {
+    setIsLoder(true);
     const token = localStorage.getItem("access_token");
     const res = await getBanner({ token });
     setBannerData(res?.data?.data);
+    if (res.status === 200) {
+      setIsLoder(false);
+    }
   };
   useEffect(() => {
     getBannerCall();
@@ -82,6 +87,10 @@ export const Banner = () => {
       console.log(ids);
     }
   }, [singelFile]);
+
+  const handleSubmit = (e, id, index) => {
+    e.preventDefault(); // Prevent default form submission
+  };
   return (
     <div className="flex flex-col gap-10 ">
       {bannerData?.length > 0
@@ -90,6 +99,7 @@ export const Banner = () => {
               <div className="absolute z-10 w-full top-5 ">
                 {editAble === index ? (
                   <button
+                    type="submit"
                     className=" absolute top-[3%] hover:cursor-pointer hover:scale-105 right-[3%] bg-white px-4 py-2 rounded-lg"
                     onClick={() => updateBannerCall(i?._id, index)}
                   >
@@ -140,64 +150,17 @@ export const Banner = () => {
                    justify-center  flex  flex-col delay-700 transform duration-700  -translate-x-[2%] ease-in-out  md:p-4 `}
               >
                 {editAble === index ? (
-                  <>
-                    {" "}
-                    <input
-                      type="text"
-                      className="font-mono bg-transparent border text-white text-[10px] md:text-2xl 2xl:text-5xl italic"
-                      name="bannerh1"
-                      value={i.bannerh1}
-                      onChange={(e) =>
-                        setBannerData((prevData) =>
-                          prevData.map((item, idx) =>
-                            idx === index
-                              ? { ...item, [e.target.name]: e.target.value }
-                              : item
-                          )
-                        )
-                      }
-                    />
-                    <input
-                      type="text"
-                      className="heading text-white md:text-6xl bg-transparent border font-extrabold md:mt-5 2xl:text-9xl"
-                      name="bannerh2"
-                      value={i.bannerh2}
-                      onChange={(e) =>
-                        setBannerData((prevData) =>
-                          prevData.map((item, idx) =>
-                            idx === index
-                              ? { ...item, [e.target.name]: e.target.value }
-                              : item
-                          )
-                        )
-                      }
-                    />
-                    <div className="flex md:mt-6">
-                      <h1 className="lg:border-r-2 heading md:text-5xl font-bold border-amber-500 text-amber-500 pr-3 2xl:text-9xl">
-                        Sale
-                      </h1>
-                      <div className="md:px-2 text-white hidden lg:flex flex-col items-start 2xl:text-5xl">
-                        <input
-                          type="text"
-                          className="italic bg-transparent border"
-                          name="bannerh3"
-                          value={i.bannerh3}
-                          onChange={(e) =>
-                            setBannerData((prevData) =>
-                              prevData.map((item, idx) =>
-                                idx === index
-                                  ? { ...item, [e.target.name]: e.target.value }
-                                  : item
-                              )
-                            )
-                          }
-                        />
-                      </div>
-                    </div>
-                    <div className="md:pt-5">
+                  <form onSubmit={(e) => handleSubmit(e, i?._id, index)}>
+                    <>
+                      {" "}
                       <input
-                        name="bannerh4"
-                        value={i.bannerh4}
+                        required
+                        type="text"
+                        className="font-mono bg-transparent border text-white text-[10px] md:text-2xl 2xl:text-5xl italic"
+                        name="bannerh1"
+                        value={i.bannerh1}
+                        min={5}
+                        maxLength={20}
                         onChange={(e) =>
                           setBannerData((prevData) =>
                             prevData.map((item, idx) =>
@@ -207,10 +170,74 @@ export const Banner = () => {
                             )
                           )
                         }
-                        className="md:px-6 italic px-2 md:py-2 bg-amber-500 text-black font-bold text-[9px] md:text-xl 2xl:text-5xl"
                       />
-                    </div>
-                  </>
+                      <input
+                        required
+                        type="text"
+                        className="heading w-full text-white md:text-6xl bg-transparent border font-extrabold md:mt-5 2xl:text-9xl"
+                        name="bannerh2"
+                        value={i.bannerh2}
+                        min={5}
+                        maxLength={15}
+                        onChange={(e) =>
+                          setBannerData((prevData) =>
+                            prevData.map((item, idx) =>
+                              idx === index
+                                ? { ...item, [e.target.name]: e.target.value }
+                                : item
+                            )
+                          )
+                        }
+                      />
+                      <div className="flex md:mt-6">
+                        <h1 className="lg:border-r-2 heading md:text-5xl font-bold border-amber-500 text-amber-500 pr-3 2xl:text-9xl">
+                          Sale
+                        </h1>
+                        <div className="md:px-2 text-white hidden lg:flex flex-col items-start 2xl:text-5xl">
+                          <input
+                            type="text"
+                            required
+                            className="italic bg-transparent border"
+                            name="bannerh3"
+                            value={i.bannerh3}
+                            min={5}
+                            maxLength={40}
+                            onChange={(e) =>
+                              setBannerData((prevData) =>
+                                prevData.map((item, idx) =>
+                                  idx === index
+                                    ? {
+                                        ...item,
+                                        [e.target.name]: e.target.value,
+                                      }
+                                    : item
+                                )
+                              )
+                            }
+                          />
+                        </div>
+                      </div>
+                      <div className="md:pt-5">
+                        <input
+                          name="bannerh4"
+                          required
+                          value={i.bannerh4}
+                          min={5}
+                          maxLength={20}
+                          onChange={(e) =>
+                            setBannerData((prevData) =>
+                              prevData.map((item, idx) =>
+                                idx === index
+                                  ? { ...item, [e.target.name]: e.target.value }
+                                  : item
+                              )
+                            )
+                          }
+                          className="md:px-6 italic px-2 md:py-2 bg-amber-500 text-black font-bold text-[9px] md:text-xl 2xl:text-5xl"
+                        />
+                      </div>
+                    </>
+                  </form>
                 ) : (
                   <>
                     <h1 className="font-mono text-white text-[10px] md:text-2xl 2xl:text-5xl italic">
@@ -238,6 +265,8 @@ export const Banner = () => {
             </div>
           ))
         : ""}
+
+      {isLoder && <Loader />}
     </div>
   );
 };
