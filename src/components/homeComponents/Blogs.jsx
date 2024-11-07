@@ -187,40 +187,18 @@ export const Blogs = () => {
                       />
                     </div>
                   )}
-
-                  <div className="lg:absolute w-full lg:w-80 bottom-0 right-0 bg-black flex justify-center items-center flex-col py-3">
-                    <h1 className="text-white text-lg font-semibold ">
-                      {editAble === index ? (
-                        <input
-                          type="text"
-                          className="bg-transparent border text-white text-lg font-semibold"
-                          name="blogsh1"
-                          value={item.blogsh1}
-                          onChange={(e) =>
-                            setBlogsData((prevData) =>
-                              prevData.map((item, idx) =>
-                                idx === index
-                                  ? { ...item, [e.target.name]: e.target.value }
-                                  : item
-                              )
-                            )
-                          }
-                        />
-                      ) : (
-                        <h1 className="text-white text-lg font-semibold">
-                          {item?.blogsh1}
-                        </h1>
-                      )}
-                    </h1>
-                    <div className="flex justify-center items-center text-center">
-                      {" "}
-                      <p className="text-[#CCCC] py-3 italic">
+                  <form action="">
+                    <div className="lg:absolute w-full lg:w-80 bottom-0 right-0 bg-black flex justify-center items-center flex-col py-3">
+                      <h1 className="text-white text-lg font-semibold ">
                         {editAble === index ? (
                           <input
                             type="text"
-                            className="bg-transparent border text-[#CCCC] py-3 italic"
-                            name="blogsh2"
-                            value={item.blogsh2}
+                            className="bg-transparent border text-white text-lg font-semibold"
+                            name="blogsh1"
+                            value={item.blogsh1}
+                            required
+                            min={5}
+                            maxLength={50}
                             onChange={(e) =>
                               setBlogsData((prevData) =>
                                 prevData.map((item, idx) =>
@@ -235,13 +213,45 @@ export const Blogs = () => {
                             }
                           />
                         ) : (
-                          <p className="text-[#CCCC] py-3 italic">
-                            {item?.blogsh2}
-                          </p>
+                          <h1 className="text-white text-lg font-semibold">
+                            {item?.blogsh1}
+                          </h1>
                         )}
-                      </p>
+                      </h1>
+                      <div className="flex justify-center items-center text-center">
+                        {" "}
+                        <p className="text-[#CCCC] py-3 italic">
+                          {editAble === index ? (
+                            <input
+                              type="text"
+                              className="bg-transparent border text-[#CCCC] py-3 italic"
+                              name="blogsh2"
+                              value={item.blogsh2}
+                              required
+                              min={5}
+                              maxLength={50}
+                              onChange={(e) =>
+                                setBlogsData((prevData) =>
+                                  prevData.map((item, idx) =>
+                                    idx === index
+                                      ? {
+                                          ...item,
+                                          [e.target.name]: e.target.value,
+                                        }
+                                      : item
+                                  )
+                                )
+                              }
+                            />
+                          ) : (
+                            <p className="text-[#CCCC] py-3 italic">
+                              {item?.blogsh2}
+                            </p>
+                          )}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  </form>
                 </SwiperSlide>
               ))}
             {/* <SwiperSlide

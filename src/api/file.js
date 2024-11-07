@@ -27,7 +27,6 @@ export const getFile = async ({id}) => {
         {
             method: 'GET',
             url: `http://localhost:5000/file/${id}`,
-            // headers: { Authorization: `Bearer ${token}` }
         }
     );
     return res

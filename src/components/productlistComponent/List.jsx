@@ -14,7 +14,12 @@ import {
 import { toast } from "react-toastify";
 import { getCategory } from "../../api/category";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { DeleteModal } from "../resuableComponents/DeleteModal";
+import { Loader } from "../resuableComponents/Loader";
 export const List = () => {
+  const [isLoder, setIsLoder] = useState();
+  const [deleteModalOpen, setDeleteMoadalOpen] = useState();
+  const [deleteModalId, setDeleteMoadalId] = useState();
   const [fetchCategoryData, setFetchCategoryData] = useState();
   const [categoryData, setCategoryData] = useState();
   const [selectOption, setSelectOption] = useState("All Category");
@@ -38,49 +43,24 @@ export const List = () => {
     };
     fetchCategoryData();
   }, []);
-  useEffect(() => {
-    const fetchProductData = async () => {
-      const token = localStorage.getItem("access_token");
-      const res = await getAllProduct({ token });
-      setAllProduct(res?.data?.data);
-    };
-    fetchProductData();
-  }, [deleteProduct]);
-
-  useEffect(() => {
-    if (allProduct?.length) {
-      const ids = allProduct.map((item) => item.avatar);
-      const fetchImage = async () => {
-        const image = [];
-        for (let i = 0; i < ids.length; i++) {
-          try {
-            const res = await getFile({ id: ids[i] });
-            image.push(res?.data?.data);
-          } catch (error) {
-            console.error("Error fetching image:", error);
-          }
-        }
-        setAvatar(image);
-      };
-
-      fetchImage();
+  const fetchProductData = async () => {
+    setIsLoder(true);
+    const token = localStorage.getItem("access_token");
+    const res = await getAllProduct({ token });
+    setAllProduct(res?.data?.data);
+    if (res.status === 200) {
+      setIsLoder(false);
     }
-  }, [allProduct]);
+  };
+  useEffect(() => {
+    fetchProductData();
+  }, []);
 
   const singelProductCall = async (id) => {
     const token = localStorage.getItem("access_token");
     setProductModal(true);
     const res = await getSingleProduct({ id, token });
     setSingelProductData(res?.data?.data);
-  };
-
-  const deleteSingelProductCall = async (id) => {
-    const token = localStorage.getItem("access_token");
-    const res = await deleteSingleProduct({ id, token });
-    setDeleteProduct(res);
-    if (res) {
-      toast("Product Deleted");
-    }
   };
 
   const getCategoryItem = (nameCategory) => {
@@ -138,7 +118,7 @@ export const List = () => {
               {isOpenFilterCategoryModal && (
                 <>
                   <div
-                    className="  text-white w-40  border-none rounded-md focus:outline-none bg-transparent absolute z-50 right-0 top-9 h-52 "
+                    className="  text-white w-40  border-none rounded-md focus:outline-none bg-transparent absolute z-50 right-0 top-9 max-h-52 "
                     name="categoryId"
                   >
                     <div
@@ -179,13 +159,12 @@ export const List = () => {
                 <th className="pb-2">
                   <input type="checkbox" className="cursor-pointer" />
                 </th>
-                <th className="pb-2 whitespace-nowrap text-start pl-5">
+                <th className="pb-2 whitespace-nowrap text-center pl-5">
                   Product Name & Size
                 </th>
                 <th className="pb-2 whitespace-nowrap">Price</th>
                 <th className="pb-2 whitespace-nowrap">Stock</th>
                 <th className="pb-2 whitespace-nowrap">Category</th>
-                <th className="pb-2 whitespace-nowrap">Rating</th>
                 <th className="pb-2 whitespace-nowrap">Action</th>
               </tr>
             </thead>
@@ -204,7 +183,7 @@ export const List = () => {
                       <div className="flex justify-start items-center gap-2  whitespace-nowrap">
                         <div className="w-14 h-14 rounded-xl bg-slate-200 flex justify-center items-center ml-10">
                           <img
-                            src={`data:image/png;base64,${item?.image}`}
+                            src={`data:image/png;base64,${item?.avatar?.image}`}
                             className="w-full h-full rounded-lg"
                             alt="Product Avatar"
                           />
@@ -214,7 +193,8 @@ export const List = () => {
                             edit.bodyColor ? "text-amber-500" : " text-black"
                           } text-sm md:text-base font-normal text-center`}
                         >
-                          {item?.name}
+                          {item?.name.substring(0, 15)}
+                          {item.name.length > 10 ? "..." : ""}
                         </h1>
                       </div>
                     </td>
@@ -226,11 +206,6 @@ export const List = () => {
                     </td>
                     <td className="text-sm md:text-base font-normal whitespace-nowrap text-center">
                       {item?.categoryId?.name}
-                    </td>
-                    <td className="whitespace-nowrap">
-                      <div className="flex text-sm md:text-base font-normal justify-center items-center">
-                        <h1>{item.review}</h1>
-                      </div>
                     </td>
                     <td className="whitespace-nowrap">
                       <div className="flex justify-center items-center gap-5">
@@ -249,12 +224,17 @@ export const List = () => {
                         />
                         <MdDelete
                           className="cursor-pointer text-lg hover:text-amber-500"
-                          onClick={() => deleteSingelProductCall(item?._id)}
+                          onClick={() => {
+                            setDeleteMoadalOpen(true);
+                            setDeleteMoadalId(item?._id);
+                          }}
                         />
                       </div>
                     </td>
                   </tr>
                 ))
+              ) : isLoder ? (
+                ""
               ) : (
                 <tr>
                   <td
@@ -269,18 +249,31 @@ export const List = () => {
           </table>
         </div>
       </div>
-      <div
-        className=" fixed h-full w-full "
-        onClick={() => {
-          setIsOpenFilterCategoryModal(false);
-        }}
-      ></div>
+      {isOpenFilterCategoryModal && (
+        <div
+          className=" fixed h-full w-full top-0 right-0 "
+          onClick={() => {
+            setIsOpenFilterCategoryModal(false);
+          }}
+        ></div>
+      )}
+
       {productModal && (
         <ProductViewModal
           setProductModal={setProductModal}
           singelProductData={singelProductData}
         />
       )}
+
+      {deleteModalOpen && (
+        <DeleteModal
+          setDeleteMoadalOpen={setDeleteMoadalOpen}
+          field={"product"}
+          deleteModalId={deleteModalId}
+          fetchData={fetchProductData}
+        />
+      )}
+      {isLoder && <Loader />}
     </div>
   );
 };

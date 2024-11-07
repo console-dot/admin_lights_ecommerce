@@ -1,5 +1,3 @@
-export * from './FutureProducts'
-export * from './NewArrivals'
 export * from "./OurBenefits"
 export * from "./DiscountOffer"
 export * from "./CategoryCard"

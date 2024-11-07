@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   deleteCategoryById,
   getCategory,
@@ -7,14 +7,20 @@ import {
 } from "../../api/category";
 import { toast } from "react-toastify";
 import { MdDelete } from "react-icons/md";
-import { BiEdit } from "react-icons/bi";
+import { BiCamera, BiEdit } from "react-icons/bi";
 import { FaRegEye } from "react-icons/fa";
 import AddContext from "../../context/dashboard/AddContext";
 import { CategoryModal } from "../productComponent/CategoryModal";
 import { ImCross } from "react-icons/im";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { DeleteModal } from "../resuableComponents/DeleteModal";
+import { Loader } from "../resuableComponents/Loader";
+import { updateFile } from "../../api";
 
 export const Category = () => {
+  const [isLoder, setIsLoder] = useState();
+  const [deleteModalOpen, setDeleteMoadalOpen] = useState();
+  const [deleteModalId, setDeleteMoadalId] = useState();
   const [isOpenFilterCategoryModal, setIsOpenFilterCategoryModal] = useState();
   const [selectOption, setSelectOption] = useState("All Category");
   const [categoryUpdateId, setCategoryUpdateId] = useState();
@@ -23,11 +29,17 @@ export const Category = () => {
   const [singleCateagoryData, setSingelCategoryDta] = useState();
   const [categoryData, setCategoryData] = useState();
   const edit = useContext(AddContext);
+  const [singelFile, setSingelFile] = useState();
+  const inputFile = useRef(null);
   const fetchCategoryData = async () => {
+    setIsLoder(true);
     try {
       const token = localStorage.getItem("access_token");
       const res = await getCategory({ token });
       setCategoryData(res?.data?.data);
+      if (res.status === 200) {
+        setIsLoder(false);
+      }
     } catch (error) {
       console.error("Error fetching category data:", error);
     }
@@ -36,26 +48,25 @@ export const Category = () => {
     fetchCategoryData();
   }, []);
 
-  const deleteSingelCategoryCall = async (id) => {
-    const token = localStorage.getItem("access_token");
-    const res = await deleteCategoryById({ id, token });
-
-    if (res?.status === 200) {
-      fetchCategoryData();
-      toast("Delete Category", { className: "text-red" });
-    }
-  };
   const getSingelCategoryCall = async (id) => {
+    setIsLoder(true);
     const token = localStorage.getItem("access_token");
     const res = await getCategoryById({ id, token });
     setSingelCategoryDta(res?.data?.data);
+    if (res.status === 200) {
+      setIsLoder(false);
+    }
   };
   const updateSingelCategoryCall = async (id) => {
     delete singleCateagoryData?.__v;
     delete singleCateagoryData?._id;
+    const bgImageId = singleCateagoryData?.bgImage?._id;
+
+    const addImage = { ...singleCateagoryData, bgImage: bgImageId };
+
     const token = localStorage.getItem("access_token");
     const res = await updateCategoryById({
-      data: singleCateagoryData,
+      data: addImage,
       id,
       token,
     });
@@ -80,6 +91,32 @@ export const Category = () => {
     selectOption === "All Category"
       ? categoryData
       : categoryData?.filter((item) => item.name === selectOption);
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+    // Add your form submission logic here
+    console.log(singleCateagoryData);
+  };
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setSingelFile(e.target.files[0]);
+    }
+  };
+  const singleImageClick = () => {
+    inputFile.current.click();
+  };
+  useEffect(() => {
+    if (singelFile) {
+      const fileUpload = async () => {
+        const token = localStorage.getItem("access_token");
+        const id = singleCateagoryData?.bgImage?._id;
+        const fromData = new FormData();
+        fromData.append("file", singelFile);
+        const res = await updateFile({ fromData, token, id });
+      };
+      fileUpload();
+    }
+  }, [singelFile]);
   return (
     <div
       className={`${
@@ -126,7 +163,7 @@ export const Category = () => {
 
               {isOpenFilterCategoryModal && (
                 <div
-                  className="  text-white w-40  border-none rounded-md focus:outline-none bg-transparent absolute right-0 top-9 h-52 "
+                  className="  text-white w-40  border-none rounded-md focus:outline-none bg-transparent absolute right-0 top-9 min-h-52 "
                   name="categoryId"
                 >
                   <div
@@ -166,8 +203,8 @@ export const Category = () => {
                 <th className="pb-2">
                   <input type="checkbox" className="cursor-pointer" />
                 </th>
+                <th className="pb-2 whitespace-nowrap">Image</th>
                 <th className="pb-2 whitespace-nowrap">Name</th>
-                <th className="pb-2 whitespace-nowrap">StocK</th>
                 <th className="pb-2 whitespace-nowrap">Description</th>
                 <th className="pb-2 whitespace-nowrap">Action</th>
               </tr>
@@ -182,14 +219,19 @@ export const Category = () => {
                   <td className="py-2 text-center">
                     <input type="checkbox" className="cursor-pointer" />
                   </td>
+                  <td className="text-center text-sm md:text-base font-normal w-16 h-16 whitespace-nowrap">
+                    <img
+                      className="h-full w-full"
+                      src={`data:image/png;base64,${item?.bgImage?.image}`}
+                      alt=""
+                    />
+                  </td>
                   <td className="text-sm md:text-base font-normal whitespace-nowrap text-center">
                     {item?.name}
                   </td>
-                  <td className="text-center text-sm md:text-base font-normal whitespace-nowrap">
-                    {item?.stock}
-                  </td>
+
                   <td className="text-sm md:text-base font-normal whitespace-nowrap text-center">
-                    {item?.description}
+                    {item?.description?.slice(0,20)}
                   </td>
                   <td className="whitespace-nowrap">
                     <div className="flex justify-center items-center gap-5">
@@ -203,7 +245,11 @@ export const Category = () => {
                       />
                       <MdDelete
                         className="cursor-pointer text-lg hover:text-amber-500"
-                        onClick={() => deleteSingelCategoryCall(item?._id)}
+                        onClick={() => {
+                          setDeleteMoadalOpen(true);
+                          setDeleteMoadalId(item?._id);
+                        }}
+                        // onClick={() => deleteSingelCategoryCall(item?._id)}
                       />
                     </div>
                   </td>
@@ -224,7 +270,13 @@ export const Category = () => {
                 <ImCross className="text-white text-lg" />
               </div>
               <h1 className="text-white text-2xl text-center">View Category</h1>
-
+              <div className="w-full  flex justify-center items-center mt-3">
+                <img
+                  className="w-60 h-60 rounded-full"
+                  src={`data:image/png;base64,${singleCateagoryData?.bgImage?.image}`}
+                  alt=""
+                />
+              </div>
               <div className="flex flex-col mt-2">
                 <h1 className="text-white">Category Name</h1>
                 <h1 className="border border-gray-500 bg-transparent  rounded-md w-full p-2 focus:outline-none my-3 text-white">
@@ -235,12 +287,6 @@ export const Category = () => {
                 <h1 className="text-white">description</h1>
                 <h1 className="border border-gray-500 bg-transparent  rounded-md w-full p-2 focus:outline-none my-3 text-white">
                   {singleCateagoryData?.description}
-                </h1>
-              </div>
-              <div className="flex flex-col mt-2">
-                <h1 className="text-white">Stock</h1>
-                <h1 className="border border-gray-500 bg-transparent  rounded-md w-full p-2 focus:outline-none my-3 text-white">
-                  {singleCateagoryData?.stock}
                 </h1>
               </div>
             </div>
@@ -260,63 +306,81 @@ export const Category = () => {
               <h1 className="text-white text-2xl text-center">
                 Update Category
               </h1>
+              <div
+                className="flex relative justify-center rounded-full
+                 items-center mt-4"
+              >
+                <div className="absolute bottom-0 right-24">
+                  <BiCamera
+                    className="text-white text-3xl cursor-pointer"
+                    onClick={singleImageClick}
+                  />
+                </div>
+                <input
+                  type="file"
+                  id="imgupload"
+                  ref={inputFile}
+                  className={`hidden appearance-none`}
+                  onChange={handleFileChange}
+                />
+                {singelFile ? (
+                  <img
+                    src={URL.createObjectURL(singelFile)}
+                    className="w-[70%] h-60  rounded-full"
+                  />
+                ) : (
+                  <img
+                    src={`data:image/png;base64,${singleCateagoryData?.bgImage?.image}`}
+                    className="w-[70%] h-60  rounded-full"
+                  />
+                )}
+              </div>
+              <form onSubmit={handleSubmit}>
+                <div className="flex flex-col mt-2">
+                  <h1 className="text-white">Category Name</h1>
+                  <input
+                    type="text"
+                    className="border border-gray-500 bg-transparent rounded-md w-full p-2 focus:outline-none my-3 text-white"
+                    placeholder="Category Name..."
+                    value={singleCateagoryData?.name || ""}
+                    name="name"
+                    onChange={(e) =>
+                      setSingelCategoryDta({
+                        ...singleCateagoryData,
+                        [e.target.name]: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </div>
 
-              <div className="flex flex-col mt-2">
-                <h1 className="text-white">Category Name</h1>
-                <input
-                  type="text"
-                  className="border border-gray-500 bg-transparent  rounded-md w-full p-2 focus:outline-none my-3 text-white"
-                  placeholder="Category Name..."
-                  value={singleCateagoryData?.name}
-                  name="name"
-                  onChange={(e) =>
-                    setSingelCategoryDta({
-                      ...singleCateagoryData,
-                      [e.target.name]: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div className="flex flex-col mt-2">
-                <h1 className="text-white">description</h1>
-                <textarea
-                  type="text"
-                  className="border border-gray-500 bg-transparent  rounded-md w-full p-2 focus:outline-none my-3 text-white"
-                  placeholder="description..."
-                  value={singleCateagoryData?.description}
-                  name="description"
-                  onChange={(e) =>
-                    setSingelCategoryDta({
-                      ...singleCateagoryData,
-                      [e.target.name]: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div className="flex flex-col mt-2">
-                <h1 className="text-white">Stock</h1>
-                <input
-                  type="number"
-                  className="border border-gray-500 bg-transparent  rounded-md w-full p-2 focus:outline-none my-3 text-white"
-                  placeholder="Category Name..."
-                  value={singleCateagoryData?.stock}
-                  name="stock"
-                  onChange={(e) =>
-                    setSingelCategoryDta({
-                      ...singleCateagoryData,
-                      [e.target.name]: parseInt(e.target.value),
-                    })
-                  }
-                />
-              </div>
-              <div className="flex justify-center items-center ">
-                <button
-                  className="text-white bg-amber-500 py-2 px-4 rounded-lg "
-                  onClick={() => updateSingelCategoryCall(categoryUpdateId)}
-                >
-                  Save
-                </button>
-              </div>
+                <div className="flex flex-col mt-2">
+                  <h1 className="text-white">Description</h1>
+                  <textarea
+                    className="border border-gray-500 bg-transparent rounded-md w-full p-2 focus:outline-none my-3 text-white"
+                    placeholder="Description..."
+                    value={singleCateagoryData?.description || ""}
+                    name="description"
+                    onChange={(e) =>
+                      setSingelCategoryDta({
+                        ...singleCateagoryData,
+                        [e.target.name]: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </div>
+
+                <div className="flex justify-center items-center ">
+                  <button
+                    type="submit"
+                    className="text-white bg-amber-500 py-2 px-4 rounded-lg "
+                    onClick={() => updateSingelCategoryCall(categoryUpdateId)}
+                  >
+                    Save
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -326,6 +390,17 @@ export const Category = () => {
           <CategoryModal fetchCategoryDataCall={fetchCategoryData} />
         )}
       </div>
+
+      {deleteModalOpen && (
+        <DeleteModal
+          setDeleteMoadalOpen={setDeleteMoadalOpen}
+          field={"category"}
+          deleteModalId={deleteModalId}
+          fetchData={fetchCategoryData}
+        />
+      )}
+
+      {isLoder && <Loader />}
     </div>
   );
 };

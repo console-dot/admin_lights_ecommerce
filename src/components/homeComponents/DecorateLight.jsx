@@ -58,8 +58,9 @@ export const DecorateLight = () => {
       setIds((prev) => ({
         ...prev,
         [side]:
-          decorateLightData[`image${side.charAt(0).toUpperCase() + side.slice(1)}`]
-            ?._id,
+          decorateLightData[
+            `image${side.charAt(0).toUpperCase() + side.slice(1)}`
+          ]?._id,
       }));
     }
   };
@@ -95,6 +96,7 @@ export const DecorateLight = () => {
           <div className="absolute top-[-40px]">
             <button
               className="bg-white px-4 py-2 rounded-lg text-black"
+              type="submit"
               onClick={() => updateDecorateLightCall(decorateLightData?._id)}
             >
               Save
@@ -131,27 +133,16 @@ export const DecorateLight = () => {
               />
             </div>
             {/* Text Section */}
-            <div className="relative w-full flex flex-col md:items-end items-start md:ml-0 px-6 md:w-[50%] ">
-              <input
-                type="text"
-                className="text-amber-500 bg-transparent px-3 border heading md:text-5xl text-3xl md:text-end text-start tracking-tighter font-bold   w-full"
-                value={decorateLightData?.decorateLighth1}
-                name="decorateLighth1"
-                onChange={(e) =>
-                  setDecorateLightData({
-                    ...decorateLightData,
-                    [e.target.name]: e.target.value,
-                  })
-                }
-              />
-
-              <div className="md:w-[80%] w-[60%]  md:mt-0 mt-1 h-[1px] bg-gray-600 absolute md:left-[-25%] z-20  md:top-[13%] top-8 "></div>
-              <p className=" mt-6 italic text-lg md:text-end text-start  w-full">
-                <textarea
+            <form action="">
+              <div className="relative w-full flex flex-col md:items-end items-start md:ml-0 px-6 md:w-[50%] ">
+                <input
                   type="text"
-                  className=" mt-6 h-40 italic text-lg text-start  w-full border bg-transparent "
-                  name="decorateLighth2"
-                  value={decorateLightData?.decorateLighth2}
+                  className="text-amber-500 bg-transparent px-3 border heading md:text-5xl text-3xl md:text-end text-start tracking-tighter font-bold   w-full"
+                  value={decorateLightData?.decorateLighth1}
+                  name="decorateLighth1"
+                  required
+                  min={5}
+                  maxLength={20}
                   onChange={(e) =>
                     setDecorateLightData({
                       ...decorateLightData,
@@ -159,12 +150,31 @@ export const DecorateLight = () => {
                     })
                   }
                 />
-              </p>
-              <div className="md:h-16 h-8  w-[1px] my-4   bg-gray-600 md:mr-6 mr-0 md:ml-0 ml-6"></div>
-              <button className="shop-button  w-28 px-2 py-3  bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white rounded-full md:mb-0 mb-4">
-                <span>Shop Now</span>
-              </button>
-            </div>
+
+                <div className="md:w-[80%] w-[60%]  md:mt-0 mt-1 h-[1px] bg-gray-600 absolute md:left-[-25%] z-20  md:top-[13%] top-8 "></div>
+                <p className=" mt-6 italic text-lg md:text-end text-start  w-full">
+                  <textarea
+                    type="text"
+                    className=" mt-6 h-40 italic text-lg text-start  w-full border bg-transparent "
+                    name="decorateLighth2"
+                    value={decorateLightData?.decorateLighth2}
+                    required
+                    min={5}
+                    maxLength={100}
+                    onChange={(e) =>
+                      setDecorateLightData({
+                        ...decorateLightData,
+                        [e.target.name]: e.target.value,
+                      })
+                    }
+                  />
+                </p>
+                <div className="md:h-16 h-8  w-[1px] my-4   bg-gray-600 md:mr-6 mr-0 md:ml-0 ml-6"></div>
+                <button className="shop-button  w-28 px-2 py-3  bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white rounded-full md:mb-0 mb-4">
+                  <span>Shop Now</span>
+                </button>
+              </div>
+            </form>
           </div>
           {/* Right Image with Diagonal Lines */}
           <div className="relative lg:w-[40%] w-full md:order-1 lg:order-none">
