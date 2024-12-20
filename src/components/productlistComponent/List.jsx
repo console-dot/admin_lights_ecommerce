@@ -6,12 +6,9 @@ import AddContext from "../../context/dashboard/AddContext";
 import "./List.css";
 import { ProductViewModal } from "../productComponent/ProductViewModal";
 import {
-  deleteSingleProduct,
   getAllProduct,
-  getFile,
   getSingleProduct,
 } from "../../api";
-import { toast } from "react-toastify";
 import { getCategory } from "../../api/category";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { DeleteModal } from "../resuableComponents/DeleteModal";
@@ -20,14 +17,11 @@ export const List = () => {
   const [isLoder, setIsLoder] = useState();
   const [deleteModalOpen, setDeleteMoadalOpen] = useState();
   const [deleteModalId, setDeleteMoadalId] = useState();
-  const [fetchCategoryData, setFetchCategoryData] = useState();
   const [categoryData, setCategoryData] = useState();
   const [selectOption, setSelectOption] = useState("All Category");
-  const [avatar, setAvatar] = useState();
   const [singelProductData, setSingelProductData] = useState();
   const [productModal, setProductModal] = useState(false);
   const [allProduct, setAllProduct] = useState();
-  const [deleteProduct, setDeleteProduct] = useState();
   const edit = useContext(AddContext);
   const [isOpenFilterCategoryModal, setIsOpenFilterCategoryModal] = useState();
 
@@ -88,10 +82,19 @@ export const List = () => {
               } text-lg font-semibold `}
             >
               All Product List{" "}
-              <span className="text-amber-500">{filteredData?.length}</span>
             </h1>
           </div>
           <div className=" flex gap-2">
+            <button
+              className={`${
+                edit.bodyColor
+                  ? "text-white border-white"
+                  : " text-black border-black"
+              } text-sm font-semibold rounded-lg border-[0.5px] px-4 py-2`}
+              disabled
+            >
+              Total Products : {" " + filteredData?.length}
+            </button>
             <button
               className={`${
                 edit.bodyColor ? "text-white" : " text-black"
@@ -156,13 +159,8 @@ export const List = () => {
                   edit.bodyColor ? "text-white" : " text-black"
                 } text-start`}
               >
-                <th className="pb-2">
-                  <input type="checkbox" className="cursor-pointer" />
-                </th>
-                <th className="pb-2 whitespace-nowrap text-center pl-5">
-                  Product Name & Size
-                </th>
-                <th className="pb-2 whitespace-nowrap">Price</th>
+                <th className="pb-2 ">Product Name </th>
+                <th className="pb-2 whitespace-nowrap text-start">Price</th>
                 <th className="pb-2 whitespace-nowrap">Stock</th>
                 <th className="pb-2 whitespace-nowrap">Category</th>
                 <th className="pb-2 whitespace-nowrap">Action</th>
@@ -176,9 +174,6 @@ export const List = () => {
                       edit.bodyColor ? "text-white" : " text-black"
                     }`}
                   >
-                    <td className="py-2 text-center">
-                      <input type="checkbox" className="cursor-pointer" />
-                    </td>
                     <td>
                       <div className="flex justify-start items-center gap-2  whitespace-nowrap">
                         <div className="w-14 h-14 rounded-xl bg-slate-200 flex justify-center items-center ml-10">

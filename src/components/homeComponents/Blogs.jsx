@@ -41,7 +41,7 @@ export const Blogs = () => {
     fromData.append("file", singelFile);
     const res = await updateFile({ fromData, token, id });
     if (res.status === 200) {
-      toast("updated image Blogs");
+      toast.success("Successfully Upadted");
     }
   };
   useEffect(() => {
@@ -70,7 +70,7 @@ export const Blogs = () => {
         });
         console.log(res);
         if (res.status === 200) {
-          toast("updated Blogs ");
+          toast.success("Successfully Upadted");
           setEditAble(null);
           getBlogsCall();
         }

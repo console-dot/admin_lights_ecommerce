@@ -39,7 +39,7 @@ export const LuxuryStylist = () => {
       token,
     });
     if (res.status === 200) {
-      toast("updated luxury ");
+      toast.success("Successfully Updated");
       setEditAble(false);
       getLuxuryCall();
     }
@@ -57,7 +57,7 @@ export const LuxuryStylist = () => {
     fromData.append("file", singelFile);
     const res = await updateFile({ fromData, token, id });
     if (res.status === 200) {
-      toast("updated luxury image");
+      toast.success("Successfully Updated");
     }
   };
   useEffect(() => {
@@ -147,9 +147,9 @@ export const LuxuryStylist = () => {
                   </div>
                 </form>
                 <div className="mt-5">
-                  <button className="shop-button px-4 py-2 bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white rounded-full">
+                  {/* <button className="shop-button px-4 py-2 bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white rounded-full">
                     <span>Read More</span>
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -197,9 +197,9 @@ export const LuxuryStylist = () => {
                   </h1>
                 </div>
                 <div className="mt-5">
-                  <button className="shop-button px-4 py-2 bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white rounded-full">
+                  {/* <button className="shop-button px-4 py-2 bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white rounded-full">
                     <span>Read More</span>
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>

@@ -15,7 +15,66 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+/* Custom Scrollbar Styles */
+.custom-scrollbar {
+  /* Enable smooth scrolling behavior */
+  scroll-behavior: smooth;
+  /* Hide default scrollbar for Firefox */
+  scrollbar-width: 0.5px;
+}
 
+/* Hide default scrollbar for Chrome, Safari, and Edge */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0.5px;
+}
+
+/* Track styles */
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+  margin: 4px;
+}
+
+/* Handle styles */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 10px;
+  
+}
+
+/* Handle hover state */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: black;
+}
+
+/* Dark mode variant */
+.dark .custom-scrollbar {
+  scrollbar-color: black #1F2937;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-track {
+  background: black;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: black;
+  border-color: #1F2937;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: black;
+}
+
+/* Variant with smaller scrollbar */
+.custom-scrollbar-sm::-webkit-scrollbar {
+  width: 0.5px;
+}
+
+/* Variant with larger scrollbar */
+.custom-scrollbar-lg::-webkit-scrollbar {
+  width: 12px;
+
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

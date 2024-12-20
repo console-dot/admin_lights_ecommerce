@@ -40,7 +40,7 @@ export const LightsHouse = () => {
       token,
     });
     if (res.status === 200) {
-      toast("Updated Light House Data");
+      toast.success("Successfully Updated");
       setEditAble(false);
       getLightHouseCall();
     }
@@ -68,7 +68,7 @@ export const LightsHouse = () => {
     console.log(fromData);
     const res = await updateFile({ fromData, token, id });
     if (res.status === 200) {
-      toast(`Updated ${id === ids.left ? "Left" : "Right"} image`);
+      toast.success("Successfully Updated");
     }
   };
 
@@ -163,9 +163,9 @@ export const LightsHouse = () => {
                   }
                 />
               </p>
-              <button className="shop-button w-28 px-2 py-3 bg-transparent border border-[#f99106] text-[#f99106] hover:text-white rounded-full md:mb-0 mb-4">
+              {/* <button className="shop-button w-28 px-2 py-3 bg-transparent border border-[#f99106] text-[#f99106] hover:text-white rounded-full md:mb-0 mb-4">
                 <span>Shop Now</span>
-              </button>
+              </button> */}
             </div>
             </form>
             <div className="relative w-full md:w-[50%]">
@@ -230,9 +230,9 @@ export const LightsHouse = () => {
               <p className="italic mt-6 text-lg text-start w-full pl-4">
                 {LightHouseData?.lightHouseh2}
               </p>
-              <button className="shop-button w-28 px-2 py-3 bg-transparent border border-[#f99106] text-[#f99106] hover:text-white rounded-full md:mb-0 mb-4">
+              {/* <button className="shop-button w-28 px-2 py-3 bg-transparent border border-[#f99106] text-[#f99106] hover:text-white rounded-full md:mb-0 mb-4">
                 <span>Shop Now</span>
-              </button>
+              </button> */}
             </div>
             <div className="md:w-[50%] w-full">
               <img

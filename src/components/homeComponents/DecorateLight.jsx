@@ -38,7 +38,7 @@ export const DecorateLight = () => {
       token,
     });
     if (res.status === 200) {
-      toast("updated DecorateLight ");
+      toast.success("Successfully Updated ");
       setEditAble(false);
       getDecorateLightCall();
     }
@@ -74,7 +74,7 @@ export const DecorateLight = () => {
     console.log(fromData);
     const res = await updateFile({ fromData, token, id });
     if (res.status === 200) {
-      toast(`Updated ${id === ids.left ? "Left" : "Right"} image`);
+      toast.success("Successfully Updated");
     }
   };
   useEffect(() => {
@@ -170,9 +170,9 @@ export const DecorateLight = () => {
                   />
                 </p>
                 <div className="md:h-16 h-8  w-[1px] my-4   bg-gray-600 md:mr-6 mr-0 md:ml-0 ml-6"></div>
-                <button className="shop-button  w-28 px-2 py-3  bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white rounded-full md:mb-0 mb-4">
+                {/* <button className="shop-button  w-28 px-2 py-3  bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white rounded-full md:mb-0 mb-4">
                   <span>Shop Now</span>
-                </button>
+                </button> */}
               </div>
             </form>
           </div>
@@ -245,9 +245,9 @@ export const DecorateLight = () => {
                 {decorateLightData?.decorateLighth2}
               </p>
               <div className="md:h-16 h-8  w-[1px] my-4   bg-gray-600 md:mr-6 mr-0 md:ml-0 ml-6"></div>
-              <button className="shop-button  w-28 px-2 py-3  bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white rounded-full md:mb-0 mb-4">
+              {/* <button className="shop-button  w-28 px-2 py-3  bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white rounded-full md:mb-0 mb-4">
                 <span>Shop Now</span>
-              </button>
+              </button> */}
             </div>
           </div>
           {/* Right Image with Diagonal Lines */}

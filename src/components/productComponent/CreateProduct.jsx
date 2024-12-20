@@ -8,6 +8,7 @@ import { category, getCategory, getCategoryById } from "../../api/category";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../resuableComponents/Loader";
+import { FaArrowLeft } from "react-icons/fa";
 
 export const CreateProduct = () => {
   const [isLoder, setIsLoder] = useState(false);
@@ -56,7 +57,7 @@ export const CreateProduct = () => {
         const res = await product({ createProductData: addGallery, token });
         if (res?.status === 201) {
           setIsLoder(false);
-          toast("Product is Created");
+          toast.success("Added Successfully");
           data.getIDInUpdatedProduct("Product list");
           setCreateProductData({
             avatar: "",
@@ -73,7 +74,7 @@ export const CreateProduct = () => {
           setSingelFile("");
           setGallery([]);
         } else {
-          toast("Please fill this fields");
+          toast.warn("All input fields required");
         }
       }
     }
@@ -173,7 +174,14 @@ export const CreateProduct = () => {
   console.log(createProductData);
   return (
     <>
-      +
+      <div className="">
+        <button
+          className=""
+          onClick={() => data.getIDInUpdatedProduct("Product list")}
+        >
+          <FaArrowLeft size={30} className="text-amber-500" />
+        </button>
+      </div>
       <div className="w-full flex gap-5 ">
         {/* card view */}
 
@@ -274,10 +282,16 @@ export const CreateProduct = () => {
             </div>
           </div>
           <div className="mt-2 flex justify-between py-3">
-            <button className="px-3 py-2 bg-amber-500 text-white rounded-lg">
+            <button
+              className="px-3 py-2 bg-amber-500 text-white rounded-lg"
+              onClick={createProduct}
+            >
               Create Product
             </button>
-            <button className="px-3  py-2 bg-slate-200 rounded-lg">
+            <button
+              className="px-3  py-2 bg-slate-200 rounded-lg"
+              onClick={() => data.getIDInUpdatedProduct("Product list")}
+            >
               Cancel
             </button>
           </div>

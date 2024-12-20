@@ -29,6 +29,8 @@ export const Testimonials = () => {
   const [testimonialViewModal, setTestimonialViewModal] = useState(false);
   const [testimonialUpdateModal, setTestimonialUpdateModal] = useState(false);
   const [singelFile, setSingelFile] = useState();
+  const edit = useContext(AddContext);
+
   const inputFile = useRef(null);
 
   useEffect(() => {
@@ -81,7 +83,7 @@ export const Testimonials = () => {
     const { __v, _id, ...updatedData } = singleTestimonialData;
     const res = await updateTestimonial({ data: updatedData, id, token });
     if (res.status === 200) {
-      toast("Updated testimonial");
+      toast.success("Successfully Updated");
       getTestmonials();
       setTestimonialUpdateModal(false);
     }
@@ -116,9 +118,9 @@ export const Testimonials = () => {
           className={`${data.bodyColor ? "text-white" : "text-black"} text-2xl`}
         >
           Testimonials{" "}
-          <span className="text-2xl text-amber-500">
+          {/* <span className="text-2xl text-amber-500">
             {searchText ? filteredTestimonials.length : testmonialData.length}
-          </span>
+          </span> */}
         </h1>
         <input
           type="text"
@@ -128,12 +130,24 @@ export const Testimonials = () => {
           placeholder="Search"
           onChange={(e) => handleSearchChange(e.target.value)}
         />
-        <button
-          className="p-2 bg-amber-500 rounded-md text-white"
-          onClick={() => data.getIDInUpdatedProduct("Add Testimonials")}
-        >
-          Add Testimonials
-        </button>
+        <div className="flex gap-4">
+          <button
+            className={`${
+              edit.bodyColor
+                ? "text-white border-white"
+                : " text-black border-black"
+            } text-sm font-semibold rounded-lg border-[0.5px] px-4 py-2`}
+            disabled
+          >
+            Total Testimonials : {" " + testmonialData?.length }
+          </button>
+          <button
+            className="p-2 bg-amber-500 rounded-md text-white"
+            onClick={() => data.getIDInUpdatedProduct("Add Testimonials")}
+          >
+            Add Testimonials
+          </button>
+        </div>
       </div>
       <div
         className={`overflow-x-scroll md:overflow-hidden  mt-10 ${
@@ -149,13 +163,13 @@ export const Testimonials = () => {
                 data.bodyColor ? "text-white" : "text-black"
               } text-start`}
             >
-              <th className="pb-2">
+              {/* <th className="pb-2">
                 <input
                   type="checkbox"
                   className="cursor-pointer"
                   onClick={() => setCheckBox(!checkBox)}
                 />
-              </th>
+              </th> */}
               <th className="pb-2 whitespace-nowrap">Image</th>
               <th className="pb-2 whitespace-nowrap">Name</th>
               <th className="pb-2 whitespace-nowrap">Rating</th>
@@ -172,13 +186,13 @@ export const Testimonials = () => {
                     data.bodyColor ? "text-white" : "text-black"
                   }`}
                 >
-                  <td className="py-2 text-center">
+                  {/* <td className="py-2 text-center">
                     <input
                       type="checkbox"
                       className="cursor-pointer"
                       checked={checkBox}
                     />
-                  </td>
+                  </td> */}
                   <td className="items-center">
                     <div className="w-full flex justify-center items-center">
                       <div className="w-14 h-14 rounded-xl bg-slate-200 flex justify-center items-center">

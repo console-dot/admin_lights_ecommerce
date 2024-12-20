@@ -72,7 +72,7 @@ export const Category = () => {
     });
 
     if (res?.status === 200) {
-      toast("Category Updated");
+      toast.success("Successfully Updated");
       fetchCategoryData();
       setCategoryUpdateModal(false);
     }
@@ -134,10 +134,20 @@ export const Category = () => {
               } text-lg font-semibold `}
             >
               All Category List{" "}
-              <span className="text-amber-500">{filteredData?.length}</span>
+              {/* <span className="text-amber-500">{filteredData?.length}</span> */}
             </h1>
           </div>
           <div className=" flex gap-2">
+          <button
+            className={`${
+              edit.bodyColor
+                ? "text-white border-white"
+                : " text-black border-black"
+            } text-sm font-semibold rounded-lg border-[0.5px] px-4 py-2`}
+            disabled
+          >
+            Total Categories : {" " + filteredData?.length || "00"}
+          </button>
             <button
               className={`${
                 edit.bodyColor ? "text-white" : " text-black"
