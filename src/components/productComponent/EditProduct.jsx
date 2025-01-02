@@ -10,6 +10,7 @@ import {
 import { getCategory, getCategoryById } from "../../api/category";
 import { toast } from "react-toastify";
 import { ImCross } from "react-icons/im";
+import { FaArrowLeft } from "react-icons/fa";
 
 export const EditProduct = () => {
   const [singelBgFile, setSingelBgFile] = useState();
@@ -78,11 +79,11 @@ export const EditProduct = () => {
       token,
     });
     if (res?.status === 200) {
-      toast("product is updated");
+      toast.success("Successfully Upadted");
       console.log(res.data.data);
       data.getIDInUpdatedProduct("Product list");
     } else {
-      toast("product is not updated");
+      toast.error("All input fields required");
     }
   };
   useEffect(() => {
@@ -214,6 +215,14 @@ export const EditProduct = () => {
   };
   return (
     <>
+      <div className="">
+        <button
+          className=""
+          onClick={() => data.getIDInUpdatedProduct("Product list")}
+        >
+          <FaArrowLeft size={30} className="text-amber-500" />
+        </button>
+      </div>
       <div className="w-full flex gap-5 ">
         {/* card view */}
         <div
@@ -337,7 +346,10 @@ export const EditProduct = () => {
             <button className="px-3 py-2 bg-amber-500 text-white rounded-lg">
               Update Product
             </button>
-            <button className="px-3  py-2 bg-slate-200 rounded-lg">
+            <button
+              className="px-3  py-2 bg-slate-200 rounded-lg"
+              onClick={() => data.getIDInUpdatedProduct("Product list")}
+            >
               Cancel
             </button>
           </div>
@@ -868,7 +880,10 @@ export const EditProduct = () => {
             >
               Update Product
             </button>
-            <button className="px-3  py-2 bg-slate-200 rounded-lg">
+            <button
+              className="px-3  py-2 bg-slate-200 rounded-lg"
+              onClick={() => data.getIDInUpdatedProduct("Product list")}
+            >
               Cancel
             </button>
           </div>

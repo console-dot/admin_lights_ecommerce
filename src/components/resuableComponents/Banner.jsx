@@ -55,7 +55,7 @@ export const Banner = () => {
         });
         console.log(res);
         if (res.status === 200) {
-          toast("updated banner");
+          toast.success("Successfully Updated");
           setEditAble(null);
           getBannerCall();
         }
@@ -77,7 +77,7 @@ export const Banner = () => {
     fromData.append("file", singelFile);
     const res = await updateFile({ fromData, token, id });
     if (res.status === 200) {
-      toast("updated image banner");
+      toast.success("Successfully Updated");
     }
   };
   useEffect(() => {
@@ -240,22 +240,22 @@ export const Banner = () => {
                   </form>
                 ) : (
                   <>
-                    <h1 className="font-mono text-white text-[10px] md:text-2xl 2xl:text-5xl italic">
+                    <h1 className="font-mono text-white text-[10px] md:text-2xl 2xl:text-3xl italic">
                       {i?.bannerh1}
                     </h1>
-                    <h1 className="heading text-white md:text-6xl  font-extrabold md:mt-5 2xl:text-9xl">
+                    <h1 className="heading text-white md:text-4xl  font-extrabold md:mt-5 2xl:text-6xl">
                       {i?.bannerh2}
                     </h1>
                     <div className="flex md:mt-6">
-                      <h1 className="lg:border-r-2 heading md:text-5xl font-bold border-amber-500 text-amber-500 pr-3 2xl:text-9xl">
+                      <h1 className="lg:border-r-2 heading md:text-3xl font-bold border-amber-500 text-amber-500 pr-3 2xl:text-9xl">
                         Sale
                       </h1>
-                      <div className="md:px-2 text-white hidden lg:flex flex-col items-start 2xl:text-5xl">
+                      <div className="md:px-2 text-white hidden lg:flex flex-col items-start 2xl:text-xl">
                         <h1 className="italic">{i?.bannerh3}</h1>
                       </div>
                     </div>
                     <div className="md:pt-5">
-                      <button className="md:px-6 italic px-2 md:py-2 bg-amber-500 text-black font-bold text-[9px] md:text-xl 2xl:text-5xl">
+                      <button disabled className="md:px-6 italic px-2 md:py-2 bg-amber-500 text-black font-bold text-[9px] md:text-xl 2xl:text-4xl">
                         {i?.bannerh4}
                       </button>
                     </div>

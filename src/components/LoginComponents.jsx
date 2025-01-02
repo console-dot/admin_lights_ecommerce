@@ -12,11 +12,11 @@ export const LoginComponents = () => {
     if (loginDetail) {
       const res = await userLogin({ loginDetail });
       if (res.status === 200) {
-        toast("Login sucessfully");
+        toast.success("Login sucessfully");
         navigate("/admin");
         localStorage.setItem("access_token", res?.data?.accessToken);
       } else {
-        toast(res?.response?.data?.message);
+        toast.error(res?.response?.data?.message);
       }
     }
   };

@@ -44,7 +44,7 @@ export const SignUpNewsLetter = () => {
       token,
     });
     if (res.status === 200) {
-      toast("updated SignUpNewLetter ");
+      toast.success("Successfully Updated");
       setEditAble(false);
       getSignUpNewLetterCall();
     }
@@ -62,7 +62,7 @@ export const SignUpNewsLetter = () => {
     fromData.append("file", singelFile);
     const res = await updateFile({ fromData, token, id });
     if (res.status === 200) {
-      toast("updated SignUpNewLetter image");
+      toast.success("Successfully Updated");
     }
   };
   useEffect(() => {
@@ -153,7 +153,7 @@ export const SignUpNewsLetter = () => {
                     }
                   />
                 </h1>
-                <div className=" border-b border-white relative lg:pt-5 pt-2 pb-1">
+                {/* <div className=" border-b border-white relative lg:pt-5 pt-2 pb-1">
                   <input
                     type="text"
                     placeholder="enter your email"
@@ -164,7 +164,7 @@ export const SignUpNewsLetter = () => {
                       <span className="text-white ">Subscribe</span>
                     </button>
                   </div>
-                </div>
+                </div> */}
               </form>
             </div>
           </div>
@@ -196,7 +196,7 @@ export const SignUpNewsLetter = () => {
               <h1 className="text-[#CCCCCC] italic  ">
                 {signUpNewLetterData?.signUpNewLetterh2}
               </h1>
-              <div className=" border-b border-white relative lg:pt-5 pt-2 pb-1">
+              {/* <div className=" border-b border-white relative lg:pt-5 pt-2 pb-1">
                 <input
                   type="text"
                   placeholder="enter your email"
@@ -207,7 +207,7 @@ export const SignUpNewsLetter = () => {
                     <span className="text-white ">Subscribe</span>
                   </button>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         )}

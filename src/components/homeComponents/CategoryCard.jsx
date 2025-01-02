@@ -38,7 +38,7 @@ export const CategoryCard = () => {
     fromData.append("file", singelFile);
     const res = await updateFile({ fromData, token, id });
     if (res.status === 200) {
-      toast("updated image CategoryCardDesign");
+      toast.success("Successfully Updated");
     }
   };
   useEffect(() => {
@@ -69,7 +69,7 @@ export const CategoryCard = () => {
         });
         console.log(res);
         if (res.status === 200) {
-          toast("updated CategoryCardDesign ");
+          toast.success("Successfully Updated");
           setEditAble(null);
           getCategoryCardDesignCall();
         }
@@ -203,9 +203,9 @@ export const CategoryCard = () => {
                   </h1>
                 )}
                 <h1 className="md:text-xl heading lg:text-3xl py-1  md:pb-2 font-semibold text-white lg:py-3 "></h1>
-                <button className="shop-button px-2 py-1 lg:px-4 lg:py-2   bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white font-semibold  rounded-full flex justify-center items-center">
+                {/* <button className="shop-button px-2 py-1 lg:px-4 lg:py-2   bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white font-semibold  rounded-full flex justify-center items-center">
                   <span className="text-[10px] md:text-base">Shop Now</span>
-                </button>
+                </button> */}
               </div>
             </div>
           ))}

@@ -22,7 +22,7 @@ export const CategoryModal = ({ fetchCategoryDataCall }) => {
     if (addBgImage) {
       const res = await category({ categoryData: addBgImage, token });
       if (res?.status === 201) {
-        toast("Add Category");
+        toast.success("Added Successfully");
         setCategoryData({
           name: "",
           description: "",
@@ -31,7 +31,7 @@ export const CategoryModal = ({ fetchCategoryDataCall }) => {
         fetchCategoryDataCall();
         edit.setAddCategoryModal(false);
       } else {
-        toast("fill this input field");
+        toast.warn("All input fields required");
       }
     }
   };

@@ -17,14 +17,14 @@ export const DeleteModal = ({
     if (res?.status === 200) {
       fetchData();
       setDeleteMoadalOpen(false);
-      toast("Delete Category", { className: "text-red" });
+      toast.success("Successfully Deleted");
     }
   };
   const deleteSingelTestimonialsCall = async () => {
     const token = localStorage.getItem("access_token");
     const res = await deleteTestimonial({ id: deleteModalId, token });
     if (res.status === 200) {
-      toast("Deleted testimonial");
+      toast.success("Successfully Deleted");
       setDeleteMoadalOpen(false);
       fetchData();
     }
@@ -34,7 +34,7 @@ export const DeleteModal = ({
     const res = await deleteSingleProduct({ id:deleteModalId, token });
     if (res) {
       fetchData()
-      toast("Product Deleted");
+      toast.success("Successfully Deleted");
       setDeleteMoadalOpen(false)
     }
   };

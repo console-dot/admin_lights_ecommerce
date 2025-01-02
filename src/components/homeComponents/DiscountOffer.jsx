@@ -41,7 +41,7 @@ export const DiscountOffer = () => {
       token,
     });
     if (res.status === 200) {
-      toast("updated DiscountOffer ");
+      toast.success("Successfully Updated ");
       setEditAble(false);
       getDiscountOfferCall();
     }
@@ -59,7 +59,7 @@ export const DiscountOffer = () => {
     fromData.append("file", singelFile);
     const res = await updateFile({ fromData, token, id });
     if (res.status === 200) {
-      toast("updated DiscountOffer image");
+      toast.success("Successfully Updated");
     }
   };
   useEffect(() => {
@@ -163,9 +163,9 @@ export const DiscountOffer = () => {
                 />
 
                 <div className="flex justify-center">
-                  <button className="shop-button mt-6 w-28 px-2 py-3   bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white  rounded-full">
+                  {/* <button className="shop-button mt-6 w-28 px-2 py-3   bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white  rounded-full">
                     <span>Shop Now</span>
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </form>
@@ -201,9 +201,9 @@ export const DiscountOffer = () => {
                 {discountOfferData?.discountOfferh3}
               </p>
               <div className="flex justify-center">
-                <button className="shop-button mt-6 w-28 px-2 py-3   bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white  rounded-full">
+                {/* <button className="shop-button mt-6 w-28 px-2 py-3   bg-transparent border border-[#f99106]  text-[#f99106] hover:text-white  rounded-full">
                   <span>Shop Now</span>
-                </button>
+                </button> */}
               </div>
             </div>
             <div className="hidden md:block w-[50%]"></div>
